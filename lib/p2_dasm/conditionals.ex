@@ -1,0 +1,18 @@
+defmodule P2Dasm.Conditionals do
+  def decode(<<0b0000>>), do: "_CLR"
+  def decode(<<0b0001>>), do: "_NC_AND_NZ"
+  def decode(<<0b0010>>), do: "_NC_AND_Z"
+  def decode(<<0b0011>>), do: "_NC"
+  def decode(<<0b0100>>), do: "_C_AND_NZ"
+  def decode(<<0b0101>>), do: "_NZ"
+  def decode(<<0b0110>>), do: "_C_NE_Z"
+  def decode(<<0b0111>>), do: "_NC_OR_NZ"
+  def decode(<<0b1000>>), do: "_C_AND_Z"
+  def decode(<<0b1001>>), do: "_C_EQ_Z"
+  def decode(<<0b1010>>), do: "_Z"
+  def decode(<<0b1011>>), do: "_NC_OR_Z"
+  def decode(<<0b1100>>), do: "_C"
+  def decode(<<0b1101>>), do: "_C_OR_NZ"
+  def decode(<<0b1110>>), do: "_C_OR_Z"
+  def decode(<<0b1111>>), do: "_SET"
+end
