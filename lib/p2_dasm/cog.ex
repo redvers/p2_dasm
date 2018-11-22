@@ -8,6 +8,9 @@ defmodule P2Dasm.Cog do
   ##                           EEEE            1101011             00           L           DDDDDDDDD     000000000 HUBSET {#}D
   def decode_instr(function, <<con::size(4), 0b1101011::size(7), 0b00::size(2), l::size(1), d::size(9), 0b000000000::size(9)>>), do: function.(%{instr: :HUBSET, con: con, l: l, d: d})
 
+  ##                           EEEE            1100000             0           L           I           DDDDDDDDD   SSSSSSSSS    WRPIN {#}D,{#}S
+  def decode_instr(function, <<con::size(4), 0b1100000::size(7), 0b0::size(1), l::size(1), i::size(1), d::size(9), s::size(9)>>), do: function.(%{instr: :WRPIN, con: con, l: l, i: i, d: d, s: s})
+
 
   ### Unimplemented Instruction:
   def decode_instr(function, <<con::size(4), instr::size(7), czi::size(3), source::size(9), destination::size(9)>>) do
