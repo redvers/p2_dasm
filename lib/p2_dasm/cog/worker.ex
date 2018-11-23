@@ -1,8 +1,8 @@
 defmodule P2Dasm.Cog.Worker do
   use GenServer
 
-  def start_link(cogid, cogmem) do
-    GenServer.start_link(__MODULE__, %{id: cogid, reg: cogmem, hubpid: self()}, name: cogid)
+  def start_link(cogmem) do
+    GenServer.start_link(__MODULE__, %{reg: cogmem, hubpid: self()})
   end
 
   def init(state) do

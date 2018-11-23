@@ -15,8 +15,8 @@ defmodule P2Dasm.Hub.Worker do
 
 
 
-  def start_link(eepromfilename) do
-    GenServer.start(__MODULE__, %{eepromfilename: eepromfilename})
+  def start_link([machinename, eepromfilename]) do
+    GenServer.start(__MODULE__, %{eepromfilename: eepromfilename}, name: machinename)
   end
 
   def init(state = %{eepromfilename: eepromfilename}) do
@@ -26,7 +26,7 @@ defmodule P2Dasm.Hub.Worker do
     copytocog = Enum.take(hubdata, 1024) # 512longs
                 |> :erlang.list_to_binary
 
-    {:ok, cog0pid} = P2Dasm.Cog.Worker.start_link(:cog0, copytocog)
+    {:ok, cog0pid} = P2Dasm.Cog.Worker.start_link(copytocog)
     cogs = %{"0": cog0pid}
 
     newstate =  state

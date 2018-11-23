@@ -28,3 +28,35 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env()}.exs"
+
+#config %{p2_dasm: %{p2one:
+#                    %{pinname: %{p0: :p2oneTX, p1: :p2oneRX},
+#                    %{connections: [:p2oneTX, :p2oneRX]}
+#                    }
+#                   }
+#}
+
+
+## Configure the virtual P2 called ":p2one"
+
+## configured_machines: list of machines to configure
+
+## pins: When smartpins are created, they'll be registered with
+# these names in the process registry
+
+## connections: Each key points to a list of pins to send data to
+# as they are electrically "connected".  Note - I put in both
+# directions just we deal with protocols that switch directions.
+
+## firmware: Automatically start the Hub with this firmware image
+
+## initialstate: :stopped or :running.
+
+config :p2_dasm, [
+                  configured_machines: [:p2one],
+                  p2one: %{pins:        %{p0: :p2oneTX, p1: :p2oneRX},
+                           connections: %{p2oneTX: [:p2oneRX], p2oneRX: [:p2oneTX]},
+                           firmware:    "smartpin_serial_turnaround.eeprom",
+                           initialstate: :stopped
+                          }
+                 ]
