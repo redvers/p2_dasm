@@ -16,7 +16,7 @@ defmodule P2Dasm.Hub.Worker do
 
 
   def start_link([machinename, eepromfilename]) do
-    GenServer.start(__MODULE__, %{eepromfilename: eepromfilename}, name: machinename)
+    GenServer.start(__MODULE__, %{id: machinename, eepromfilename: eepromfilename}, name: machinename)
   end
 
   def init(state = %{eepromfilename: eepromfilename}) do
@@ -83,7 +83,8 @@ defmodule P2Dasm.Hub.Worker do
   end
 
   def handle_call({:smartpinstart, [a,b,f,p,1,30,0], s}, _from, state) do
-    {:ok, pid} = P2Dasm.Smartpin.AsyncSerialTx.start_link({:smartpinstart, [a,b,f,p,1,30,0], s})
+    {:ok, pid} = P2Dasm.Smartpin.AsyncSerialTx.start_link({:smartpinstart, state.id, [a,b,f,p,1,30,0], s})
+
     {:reply, {:ok, pid}, state}
   end
 
