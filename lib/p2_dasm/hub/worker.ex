@@ -88,6 +88,12 @@ defmodule P2Dasm.Hub.Worker do
     {:reply, {:ok, pid}, state}
   end
 
+  def handle_call({:smartpin_wxpin_asynctx, %{bitsize: bitsize}, s}, _from, state) do
+    pinname =  P2Dasm.Smartpin.registered_name(state.id, s)
+    reply = GenServer.call(pinname, {:smartpin_wxpin_asynctx, %{bitsize: bitsize}, s})
+    {:reply, reply, state}
+  end
+    
 
 
 

@@ -1,3 +1,4 @@
+require Logger
 defmodule P2Dasm.Smartpin.AsyncSerialTx do
   use GenServer
 
@@ -15,4 +16,14 @@ defmodule P2Dasm.Smartpin.AsyncSerialTx do
   def init(state) do
     {:ok, state}
   end
+
+  def handle_call({:smartpin_wxpin_asynctx, %{bitsize: bitsize}, s}, _from, state) do
+    Logger.debug("Setting TX bitlength to #{bitsize}")
+    newstate = Map.put(state, :bitwidth, bitsize)
+    {:reply, :ok, newstate}
+  end
+
+
+
+
 end

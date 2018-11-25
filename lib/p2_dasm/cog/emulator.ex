@@ -18,6 +18,21 @@ defmodule P2Dasm.Cog.Emulator do
     newstate = Map.put(cogstate, :pc, (cogstate.pc+1))
   end
 
+  def exe_instr(%{instr: :WXPIN, con: con, l: 0, i: 1, d: d, s: s}, cogstate) do
+    <<endian::little-size(32)>> = P2Dasm.Cog.Worker.cmem(cogstate, d)
+    <<_ignoreBaudRate::size(27), bitsMinusOne::size(5)>> = <<endian::size(32)>>
+
+#  X[31:16] establishes the number of clocks in a bit period, and in case X[31:26] is zero,
+# X[15:10] establishes the number of fractional clocks in a bit period.
+# The X bit period value can be simply computed as: (clocks * $1_0000) & $FFFFFC00.
+# For example, 7.5 clocks would be $00078000, and 33.33 clocks would be $00215400.
+
+#X[4:0] sets the number of bits, minus 1. For example, a value of 7 will set the word size to 8 bits.
+
+    GenServer.call(cogstate.hubpid, {:smartpin_wxpin_asynctx, %{bitsize: bitsMinusOne+1}, s})
+
+    newstate = Map.put(cogstate, :pc, (cogstate.pc+1))
+  end
 
 
 

@@ -11,6 +11,9 @@ defmodule P2Dasm.Cog do
   ##                           EEEE            1100000             0           L           I           DDDDDDDDD   SSSSSSSSS    WRPIN {#}D,{#}S
   def decode_instr(function, <<con::size(4), 0b1100000::size(7), 0b0::size(1), l::size(1), i::size(1), d::size(9), s::size(9)>>), do: function.(%{instr: :WRPIN, con: con, l: l, i: i, d: d, s: s})
 
+  ##                           EEEE            1100000             1           L           I           DDDDDDDDD   SSSSSSSSS    WXPIN {#}D, #{S}
+  def decode_instr(function, <<con::size(4), 0b1100000::size(7), 0b1::size(1), l::size(1), i::size(1), d::size(9), s::size(9)>>), do: function.(%{instr: :WXPIN, con: con, l: l, i: i, d: d, s: s})
+
 
   ### Unimplemented Instruction:
   def decode_instr(function, <<con::size(4), instr::size(7), czi::size(3), source::size(9), destination::size(9)>>) do
