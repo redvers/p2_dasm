@@ -84,7 +84,10 @@ defmodule P2Dasm.Hub.Worker do
 
   def handle_call({:smartpinstart, [a,b,f,p,1,30,0], s}, _from, state) do
     {:ok, pid} = P2Dasm.Smartpin.AsyncSerialTx.start_link({:smartpinstart, state.id, [a,b,f,p,1,30,0], s})
-
+    {:reply, {:ok, pid}, state}
+  end
+  def handle_call({:smartpinstart, [a,b,f,p,1,31,0], s}, _from, state) do
+    {:ok, pid} = P2Dasm.Smartpin.AsyncSerialRx.start_link({:smartpinstart, state.id, [a,b,f,p,1,31,0], s})
     {:reply, {:ok, pid}, state}
   end
 
