@@ -17,6 +17,9 @@ defmodule P2Dasm.Cog do
   ##                           EEEE            11110 NN NNN NNNNNNNNN NNNNNNNNN
   def decode_instr(function, <<con::size(4), 0b11110::size(5), n::size(23)>>), do: function.(%{instr: :AUGS, con: con, n: n})
 
+  ##                           EEEE            0110000           C           Z           I           DDDDDDDDD   SSSSSSSSS      MOV D, {#}S
+  def decode_instr(function, <<con::size(4), 0b0110000::size(7), c::size(1), z::size(1), i::size(1), d::size(9), s::size(9)>>), do: function.(%{instr: :MOV, con: con, c: c, z: z, i: i, s: s, d: d})
+
 
 
   ### Unimplemented Instruction:

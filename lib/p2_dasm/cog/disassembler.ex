@@ -7,5 +7,6 @@ defmodule P2Dasm.Cog.Disassembler do
   def dis_instr(%{instr: :WRPIN, con: con, l: 0, i: 1, d: d, s: s}), do: "WRPIN 0x#{ExPrintf.sprintf("%03x", [d])}, #$#{ExPrintf.sprintf("%03x", [s])}" 
   def dis_instr(%{instr: :WXPIN, con: con, l: 0, i: 1, d: d, s: s}), do: "WRPIN 0x#{ExPrintf.sprintf("%03x", [d])}, #$#{ExPrintf.sprintf("%03x", [s])}" 
   def dis_instr(%{instr: :AUGS, con: con, n: n}), do: "AUGS #0x#{ExPrintf.sprintf("%x", [n])}" 
+  def dis_instr(%{instr: :MOV, con: con, c: c, z: z, i: i, s: s, d: d}), do: "MOV 0x#{ExPrintf.sprintf("%x", [d])}, #{ExPrintf.sprintf("%x", [s])}" 
 end
 
